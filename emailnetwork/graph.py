@@ -5,7 +5,7 @@ import textwrap
 from emailnetwork.extract import MBoxReader, extract_meta
 
 
-def plot_single_email(reader:MBoxReader, id:int=False):
+def plot_single_email(reader:MBoxReader, id:int=False, showtitle=False):
     """[summary]
 
     Usage:
@@ -26,7 +26,9 @@ def plot_single_email(reader:MBoxReader, id:int=False):
     subject = textwrap.fill(emailmsg.subject, 40)
     sender = emailmsg.sender.name if len(emailmsg.sender.name) != 0 else emailmsg.sender.email
 
+    plt.figure(figsize=(9, 6))
     G = nx.DiGraph(name='Email Social Network')
+
     for recipient in emailmsg.recipients:
         rec = recipient.name
         G.add_edge(sender, rec if len(rec) != 0 else recipient.email, 
@@ -47,8 +49,17 @@ def plot_single_email(reader:MBoxReader, id:int=False):
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=6, label_pos=0.5)
     nx.draw_planar(G,node_size=0, alpha=1, edge_color=colors, width=list(weights), font_size=8, font_weight='bold', with_labels=True, verticalalignment='bottom')
 
-    plt.tight_layout(pad=0.05)
+    if showtitle:
+        font = {"fontname": "Helvetica", "color": "k", "fontweight": "bold", "fontsize": 8}
+        plt.title(subject + '\n Delivery date: ' + emailmsg.date.strftime("%m/%d/%Y"), fontdict=font)
+    
+    plt.tight_layout(pad=0.5)
     plt.axis('off')
     plt.show()
 
-
+if __name__ == '__main__':
+    reader = MBoxReader('/Users/samuel/Footprints/emailnetwork/emailnetwork/tests/test.mbox')
+    # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
+    # plot_single_email(reader,1)
+    # plot_single_email(reader,4)
+    plot_single_email(reader, 1, True)

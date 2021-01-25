@@ -62,7 +62,7 @@ class MBoxReader(object):
     
     def filter_by_date(self, operator:str, datestring:str):
         if operator not in ['>=', '==', '<=']:
-            raise Exception("Please use one of ['>=', '==', '<=']")
+            raise ValueError("Please use one of ['>=', '==', '<=']")
         
         val = []
         for email in self.mbox:
@@ -74,16 +74,18 @@ class MBoxReader(object):
                 if emailmeta == datestring:
                     val.append(emailmeta)
             elif operator == '<=':
-                if emailmeta == datestring:
+                if emailmeta <= datestring:
                     val.append(emailmeta)
         return val
 
 
 
 if __name__ == '__main__':
-    reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
+    # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
+    reader = MBoxReader('/Users/samuel/Footprints/emailnetwork/emailnetwork/tests/test.mbox')
     print(f'{len(reader)} emails in the sample mbox.')
-    email = reader.mbox[646]
+    # email = reader.mbox[646]
+    email = reader.mbox[0]
     emailmsg = extract_meta(email)
     
     thisyearmails = reader.filter_by_date(">=", "2021-01-05")

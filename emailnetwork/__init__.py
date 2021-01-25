@@ -17,4 +17,3 @@ Network graphing utilities for email/mailbox (.mbox) data
 ##########################################################################
 
 from .version import __version__
-
