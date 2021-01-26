@@ -21,8 +21,15 @@ def extract_meta(email):
     )
 
 class MBoxReader(object):
-    """
-    docstring
+    """ A class that extends python's `mailbox` module to provide additional 
+    functionalities such as length, date filtering and parsing. A key component of 
+    many `emailnetwork`'s operations.
+
+    Usage:
+        reader = MboxReader('path-to-mbox.mbox')
+
+    Args:
+        object ([type]): Instantiate this class by specifying a path to an `.mbox` object
     """
     
     def __init__(self, path) -> None:
