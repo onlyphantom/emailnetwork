@@ -1,12 +1,14 @@
 # Email Network
 
 ## Description
-Network graphing utilities for email/mailbox data
+Network graphing utilities for email/mailbox data.
 
-![](assets/graph1.png)
-![](assets/graph4.png)
-![](assets/graph3.png)
-![](assets/graph2.png)
+<img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph1.png?raw=true" style="margin-right:10%">
+<img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph4.png?raw=true" style="margin-right:10%">
+<img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph3.png?raw=true" style="margin-right:10%">
+<img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph2.png?raw=true" style="margin-right:10%">
+
+
 
 For the social scientists, creating social networks from your mailbox data and among other things:
 * Discover subgroups within your organization (whether the different task forces established were as cohesive as it seems on the outside)  
