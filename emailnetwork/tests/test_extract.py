@@ -62,3 +62,4 @@ class TestExtract(TestCase):
             emailmsg = extract_meta(email)
             self.assertIsInstance(emailmsg, EmailMeta)
             self.assertIsInstance(emailmsg.origin_domain, str)
+            self.assertIsInstance(emailmsg.subject, str)

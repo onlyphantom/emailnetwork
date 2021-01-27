@@ -1,11 +1,13 @@
 from email.utils import getaddresses
 from mailbox import mbox
 
-from emailnetwork.emails import EmailAddress, EmailMeta
+from emailnetwork.utils import clean_subject
+
+from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
 # try:
 #     from .emails import EmailAddress, EmailMeta
 # except:
-#     from emailnetwork.emails import EmailAddress, EmailMeta
+#     from emailnetwork.emails import EmailAddress, EmailMeta.
 
 def extract_meta(email):
 
@@ -16,9 +18,13 @@ def extract_meta(email):
         sender=EmailAddress(getaddresses(email.get_all('From'))[0]),
         recipients=[EmailAddress(rec) for rec in getaddresses(recs)],
         cc=[EmailAddress(cc) for cc in getaddresses(ccs)],
-        subject=email.get('Subject', '').strip() or None,
+        subject=clean_subject(email['Subject']) or None,
         date=email['Date']
     )
+
+# def extract_body(email):
+
+#     return EmailBody(email)
 
 class MBoxReader(object):
     """ A class that extends python's `mailbox` module to provide additional 
@@ -89,11 +95,14 @@ class MBoxReader(object):
 
 if __name__ == '__main__':
     # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
-    reader = MBoxReader('/Users/samuel/Footprints/emailnetwork/emailnetwork/tests/test.mbox')
+    # reader = MBoxReader('/Users/samuel/Footprints/emailnetwork/emailnetwork/tests/test.mbox')
+    reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
     print(f'{len(reader)} emails in the sample mbox.')
     # email = reader.mbox[646]
     email = reader.mbox[0]
     emailmsg = extract_meta(email)
+    # emailbody = extract_body(email)
+    # print(emailbody)
     
     thisyearmails = reader.filter_by_date(">=", "2021-01-05")
     # print(emailmsg.recipients)
