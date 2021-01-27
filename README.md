@@ -9,7 +9,6 @@ Network graphing utilities for email/mailbox data.
 <img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph2.png?raw=true" style="margin-right:10%">
 
 
-
 For the social scientists, creating social networks from your mailbox data and among other things:
 * Discover subgroups within your organization (whether the different task forces established were as cohesive as it seems on the outside)  
 * Study social actors (most emails from Marketing involve Peter and Andy) and their relative influence  
