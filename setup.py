@@ -5,7 +5,7 @@ from emailnetwork.version import __version__
 setup(name='emailnetwork',
       version=__version__,
       description='Network graphing utilities for email/mailbox (.mbox) data',
-      long_description=(f'{Path(__file__).parent}/README.md').read_text(),
+      long_description=(Path(__file__).parent/'README.md').read_text(),
       long_description_content_type='text/markdown',
       url='http://github.com/onlyphantom/emailnetwork',
       author='Samuel Chan',
