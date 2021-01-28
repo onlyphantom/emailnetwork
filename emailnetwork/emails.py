@@ -1,7 +1,6 @@
-
 from dataclasses import dataclass
 from datetime import datetime
-from emailnetwork.utils import parse_date, clean_body
+from emailnetwork.utils import parse_date
 
 @dataclass
 class EmailMeta:
@@ -67,9 +66,5 @@ class EmailAddress:
 
 @dataclass
 class EmailBody:
-    body: list=None
-
-    def __post_init__(self):
-        self.body = clean_body(self)
-
-
+    subject: str = None
+    body: str = None
