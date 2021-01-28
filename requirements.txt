@@ -5,7 +5,7 @@ colorama==0.4.4
 cycler==0.10.0
 decorator==4.4.2
 docutils==0.16
-emailnetwork @ file:///Users/samuel/Footprints/emailnetwork
+emailnetwork==0.0.1
 idna==2.10
 keyring==22.0.1
 kiwisolver==1.3.1
