@@ -3,6 +3,7 @@ from datetime import datetime
 from dateutil import parser
 from dateutil.tz import tzlocal, tzutc
 from email.utils import parsedate_tz, mktime_tz
+from email.header import decode_header
 
 def parse_date(datestring:str):
     """[summary]
@@ -21,5 +22,34 @@ def parse_date(datestring:str):
     except Exception:
         return None
 
+def clean_subject(subject):
+    """[summary]
+    Usage:
+        
+    Args:
+        subject (byte or str)
+    """
+    subject, encoding = decode_header(subject)[0]
+    if isinstance(subject, bytes):
+        try:
+            return subject.decode(encoding)
+        except:
+            return subject.decode('utf-8')
+    else:
+        return subject
 
+def clean_body(email):
+    body = []
+    if email.is_multipart():
+        for part in email.walk():
+            ctype = part.get_content_type()
+            cdispo = str(part.get('Content-Disposition'))
 
+            # skip any text/plain (txt) attachments
+            if ctype == 'text/plain' and 'attachment' not in cdispo:
+                body.append(part.get_payload(decode=True).decode()) # decode
+                break
+    # not multipart - i.e. plain text, no attachments, keeping fingers crossed
+    else:
+        body.append(email.get_payload(decode=True).decode())
+    return body
