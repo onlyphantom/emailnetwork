@@ -27,6 +27,14 @@ If you're a graph theorist and looking for something more statistical:
 * Only dependencies are NetworkX and Matplotlib
 
 ## Example Usage
+To install `emailnetwork`:
+```
+pip install emailnetwork
+```
+
+A sample `.mbox` file is provided to you, but you can obtain export your own mailbox from your email service provider. If you use Google (Gmail), you can [use the Google Takeout service](https://takeout.google.com/settings/takeout) to export your mail data.
+
+
 ```python
 reader = MBoxReader('path-to-mbox.mbox')
 print(f'{len(reader)} emails in the sample mbox.')

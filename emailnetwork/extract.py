@@ -2,12 +2,7 @@ from email.utils import getaddresses
 from mailbox import mbox
 
 from emailnetwork.utils import clean_subject
-
 from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
-# try:
-#     from .emails import EmailAddress, EmailMeta
-# except:
-#     from emailnetwork.emails import EmailAddress, EmailMeta.
 
 def extract_meta(email):
 
@@ -95,8 +90,9 @@ class MBoxReader(object):
 
 if __name__ == '__main__':
     # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
-    # reader = MBoxReader('/Users/samuel/Footprints/emailnetwork/emailnetwork/tests/test.mbox')
-    reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
+    import os
+    MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
+    reader = MBoxReader(MBOX_PATH)
     print(f'{len(reader)} emails in the sample mbox.')
     # email = reader.mbox[646]
     email = reader.mbox[0]
