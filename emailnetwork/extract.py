@@ -7,6 +7,8 @@ from mailbox import mboxMessage
 from emailnetwork.utils import clean_subject, clean_body
 from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
 
+from emailnetwork.header import HeaderCounter
+
 def extract_meta(email):
 
     recs = email.get_all('To', []) + email.get_all('Resent-To', [])
@@ -112,6 +114,8 @@ if __name__ == '__main__':
     thisyearmails = reader.filter_by_date(">=", "2021-01-05")
     # print(emailmsg.recipients)
     # print(emailmsg.recipients[0].domain)
-    emails = reader.extract()
+    # emails = reader.extract()
+    # headers = HeaderCounter(reader)
+    # headers.histogram()
     #[email.origin_domain for email in emails]
     

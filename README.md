@@ -75,7 +75,21 @@ plot_directed(reader, 'shell')
 plot_undirected(reader, 'spring', graphml=True)
 ```
 
+#### Email Header Analysis 
+<img align="left" width="40%" src="assets/histo.png" style="margin-right:10%">
+To obtain a histogram:
 
+```py
+from emailnetwork.extract import MBoxReader
+reader = MBoxReader('path-to-mbox')
+headers = HeaderCounter(reader)
+headers.histogram()
+# to show only top 10 header, set an optional n parameter
+# headers.histogram(n=10)
+```
+Because `HeaderCounter` is a subclass of Python's `Counter`, you can also perform operations such as `headers.most_common(8)` to get the 8 most-common headers from the `mbox` file.
+
+<br/>
 ##### Why Python 3.7+?
 Python 3.7+ is required because the package is written to take advantage of many features of Python 3.7 and above. 
 
