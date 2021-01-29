@@ -5,6 +5,10 @@ from unittest import TestCase
 from emailnetwork.extract import MBoxReader, extract_meta
 from emailnetwork.emails import EmailAddress, EmailMeta
 
+"""
+Demo mbox is generated from Benjamin Bengfort's Tribe tool
+with person names modified for anonymity 
+"""
 MBOX_PATH = f'{os.path.dirname(__file__)}/test.mbox'
 
 class TestExtract(TestCase):

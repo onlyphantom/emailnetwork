@@ -89,10 +89,10 @@ class MBoxReader(object):
 
 
 if __name__ == '__main__':
-    # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
-    import os
-    MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
-    reader = MBoxReader(MBOX_PATH)
+    reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
+    # import os
+    # MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
+    # reader = MBoxReader(MBOX_PATH)
     print(f'{len(reader)} emails in the sample mbox.')
     # email = reader.mbox[646]
     email = reader.mbox[0]
