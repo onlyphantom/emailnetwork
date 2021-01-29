@@ -2,8 +2,8 @@ import os
 import datetime
 from unittest import TestCase
 
-from emailnetwork.extract import MBoxReader, extract_meta
-from emailnetwork.emails import EmailAddress, EmailMeta
+from emailnetwork.extract import MBoxReader, extract_meta, extract_body
+from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
 
 """
 Demo mbox is generated from Benjamin Bengfort's Tribe tool
@@ -63,7 +63,15 @@ class TestExtract(TestCase):
 
     def test_extract_meta_single(self):
         for email in self.reader.mbox:
+            self.assertIsInstance(email['Subject'], (bytes, str))
             emailmsg = extract_meta(email)
             self.assertIsInstance(emailmsg, EmailMeta)
             self.assertIsInstance(emailmsg.origin_domain, str)
             self.assertIsInstance(emailmsg.subject, str)
+
+    def test_extract_body_single(self):
+        for email in self.reader.mbox:
+            emailbody = extract_body(email)
+            self.assertIsInstance(emailbody, EmailBody)
+            self.assertIsInstance(emailbody.subject, str)
+            self.assertIsInstance(emailbody.body, str)
