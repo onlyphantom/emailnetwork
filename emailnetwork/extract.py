@@ -1,7 +1,10 @@
 from email.utils import getaddresses
 from mailbox import mbox
 
-from emailnetwork.utils import clean_subject
+from mailbox import mboxMessage
+
+
+from emailnetwork.utils import clean_subject, clean_body
 from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
 
 def extract_meta(email):
@@ -17,9 +20,12 @@ def extract_meta(email):
         date=email['Date']
     )
 
-# def extract_body(email):
+def extract_body(email):
 
-#     return EmailBody(email)
+    return EmailBody(
+        subject = clean_subject(email['Subject']) or None,
+        body = clean_body(email)
+    )
 
 class MBoxReader(object):
     """ A class that extends python's `mailbox` module to provide additional 
@@ -97,8 +103,11 @@ if __name__ == '__main__':
     # email = reader.mbox[646]
     email = reader.mbox[0]
     emailmsg = extract_meta(email)
-    # emailbody = extract_body(email)
-    # print(emailbody)
+    # print(reader)
+    # print(type(email))
+    # print(email.is_multipart())
+    emailbody = extract_body(email)
+    print(mboxMessage(email._payload[0]).keys())
     
     thisyearmails = reader.filter_by_date(">=", "2021-01-05")
     # print(emailmsg.recipients)

@@ -39,7 +39,6 @@ def clean_subject(subject):
         return subject
 
 def clean_body(email):
-    body = []
     if email.is_multipart():
         for part in email.walk():
             ctype = part.get_content_type()
@@ -47,9 +46,8 @@ def clean_body(email):
 
             # skip any text/plain (txt) attachments
             if ctype == 'text/plain' and 'attachment' not in cdispo:
-                body.append(part.get_payload(decode=True).decode()) # decode
+                return part.get_payload(decode=True).decode() # decode
                 break
     # not multipart - i.e. plain text, no attachments, keeping fingers crossed
     else:
-        body.append(email.get_payload(decode=True).decode())
-    return body
+        return email.get_payload(decode=True).decode()
