@@ -3,7 +3,6 @@ from mailbox import mbox
 
 from mailbox import mboxMessage
 
-
 from emailnetwork.utils import clean_subject, clean_body
 from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
 
@@ -97,7 +96,8 @@ class MBoxReader(object):
 
 
 if __name__ == '__main__':
-    reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
+    # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
+    reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
     # import os
     # MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
     # reader = MBoxReader(MBOX_PATH)
