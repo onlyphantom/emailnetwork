@@ -105,11 +105,8 @@ if __name__ == '__main__':
     # email = reader.mbox[646]
     email = reader.mbox[0]
     emailmsg = extract_meta(email)
-    # print(reader)
-    # print(type(email))
-    # print(email.is_multipart())
     emailbody = extract_body(email)
-    print(mboxMessage(email._payload[0]).keys())
+    # print(mboxMessage(email._payload[0]).keys())
     
     thisyearmails = reader.filter_by_date(">=", "2021-01-05")
     # print(emailmsg.recipients)
