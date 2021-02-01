@@ -5,9 +5,8 @@ Network graphing utilities for email/mailbox data.
 
 <img align="left" width="40%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph1.png?raw=true" style="margin-right:10%">
 <img align="left" width="40%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph4.png?raw=true" style="margin-right:10%">
-<img align="left" width="40%" src="assets/graph5.png?raw=true" style="margin-right:10%">
+<img align="left" width="40%" src="https://github.com/onlyphantom/emailnetwork/raw/main/assets/graph5.png?raw=true" style="margin-right:10%">
 <img align="left" width="40%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph3.png?raw=true" style="margin-right:10%">
-<img align="left" width="40%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph2.png?raw=true" style="margin-right:10%">
 
 
 For the social scientists, creating social networks from your mailbox data and among other things:
