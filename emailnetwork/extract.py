@@ -113,6 +113,8 @@ if __name__ == '__main__':
     # print(emailmsg.recipients[0].domain)
     # emails = reader.extract()
     # headers = HeaderCounter(reader)
+    # k = headers.keys()
+    # list(filter(lambda v: re.match('.*spam.*', v, re.IGNORECASE), k))
     # headers.histogram()
     #[email.origin_domain for email in emails]
     
