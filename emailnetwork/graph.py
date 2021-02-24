@@ -210,7 +210,8 @@ def plot_undirected(reader:MBoxReader, layout:str='shell', graphml:bool=False):
 if __name__ == '__main__':
     MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
 
-    reader = MBoxReader('/Users/samuel/Footprints/emailnetwork/emailnetwork/tests/test.mbox')
+    # reader = MBoxReader('/Users/samuel/Footprints/emailnetwork/emailnetwork/tests/test.mbox')
+    reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
     # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
     # plot_single_directed(reader,300)
     # plot_single_directed(reader, 1, True)
