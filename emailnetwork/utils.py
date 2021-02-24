@@ -32,11 +32,11 @@ def clean_subject(subject):
     subject, encoding = decode_header(subject)[0]
     if isinstance(subject, bytes):
         try:
-            return subject.decode(encoding)
+            return subject.decode(encoding).strip()
         except:
-            return subject.decode('utf-8')
+            return subject.decode('utf-8').strip()
     else:
-        return subject
+        return subject.strip()
 
 def clean_body(email):
     if email.is_multipart():

@@ -5,6 +5,7 @@ from mailbox import mboxMessage
 
 from emailnetwork.utils import clean_subject, clean_body
 from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
+from emailnetwork.summary import DomainSummary
 
 from emailnetwork.header import HeaderCounter
 

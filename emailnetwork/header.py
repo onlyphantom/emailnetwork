@@ -1,4 +1,6 @@
 from collections import Counter
+from email.header import decode_header
+from emailnetwork.utils import clean_subject
 
 class HeaderCounter(Counter):
     """[summary]
@@ -46,3 +48,12 @@ if __name__ == '__main__':
     # import os
     # MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
     # reader = MBoxReader(MBOX_PATH)
+    k = headers.keys()
+
+    containspam = list(filter(lambda v: "spam" in v.lower(), k))
+    # print(containspam)
+
+    for email in reader:
+        for key in email.keys():
+            if key in containspam:
+                print({key: decode_header(email[key])})
