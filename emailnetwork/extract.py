@@ -104,11 +104,11 @@ if __name__ == '__main__':
     # reader = MBoxReader(MBOX_PATH)
     print(f'{len(reader)} emails in the sample mbox.')
     # email = reader.mbox[646]
-    email = reader.mbox[0]
+    email = reader.mbox[1]
     emailmsg = extract_meta(email)
     emailbody = extract_body(email)
     # print(mboxMessage(email._payload[0]).keys())
-    
+    print(emailmsg.date.strftime('%B %Y'))
     thisyearmails = reader.filter_by_date(">=", "2021-01-05")
     # print(emailmsg.recipients)
     # print(emailmsg.recipients[0].domain)
