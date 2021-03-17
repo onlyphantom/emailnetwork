@@ -1,3 +1,4 @@
+from datetime import datetime
 from email.utils import getaddresses
 from mailbox import mbox
 
@@ -78,22 +79,60 @@ class MBoxReader(object):
                 print(e)
                 continue
 
-    def filter_by_date(self, operator: str, datestring: str):
-        if operator not in ['>=', '==', '<=']:
+    def filter_emails(self, emailaddress=None, datestring=None, dateoperator="=="):
+        if emailaddress != None:
+            if type(emailaddress) != str:
+                raise ValueError(
+                    "Please use a valid string representing an email address")
+
+        if dateoperator not in ['>=', '==', '<=']:
             raise ValueError("Please use one of ['>=', '==', '<=']")
 
+        if datestring != None:
+            try:
+                targetdate = datetime.strptime(datestring, "%Y-%m-%d")
+            except ValueError:
+                print(ValueError)
+                return "Please use the ISO format for comparison: YYYY-MM-DD"
+
         val = []
-        for email in self.mbox:
-            emailmeta = extract_meta(email)
-            if operator == '>=':
-                if emailmeta >= datestring:
+        if emailaddress == None and datestring == None:
+            for email in self.mbox:
+                emailmeta = extract_meta(email)
+                val.append(emailmeta)
+        elif emailaddress != None and datestring == None:
+            for email in self.mbox:
+                emailmeta = extract_meta(email)
+                checkers = [emailmeta.sender.email] + [recipient.email for recipient in emailmeta.recipients]
+                if emailaddress in checkers:
                     val.append(emailmeta)
-            elif operator == '==':
-                if emailmeta == datestring:
-                    val.append(emailmeta)
-            elif operator == '<=':
-                if emailmeta <= datestring:
-                    val.append(emailmeta)
+        elif emailaddress == None and datestring != None:
+            for email in self.mbox:
+                emailmeta = extract_meta(email)
+                if dateoperator == '>=':
+                    if emailmeta >= targetdate:
+                        val.append(emailmeta)
+                elif dateoperator == '==':
+                    if emailmeta == targetdate:
+                        val.append(emailmeta)
+                elif dateoperator == '<=':
+                    if emailmeta <= targetdate:
+                        val.append(emailmeta)
+        else:
+            for email in self.mbox:
+                emailmeta = extract_meta(email)
+                checkers = [emailmeta.sender.email] + [recipient.email for recipient in emailmeta.recipients]
+                if emailaddress in checkers:
+                    if dateoperator == '>=':
+                        if emailmeta >= targetdate:
+                            val.append(emailmeta)
+                    elif dateoperator == '==':
+                        if emailmeta == targetdate:
+                            val.append(emailmeta)
+                    elif dateoperator == '<=':
+                        if emailmeta <= targetdate:
+                            val.append(emailmeta)
+
         return val
 
 
@@ -103,4 +142,4 @@ if __name__ == '__main__':
     email = reader.mbox[1]
     emailmsg = extract_meta(email)
     emailbody = extract_body(email)
-    thisyearmails = reader.filter_by_date(">=", "2021-01-05")
+    mails = reader.filter_emails(datestring='2020-12-31', dateoperator="==")
