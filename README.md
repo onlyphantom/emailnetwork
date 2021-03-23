@@ -104,13 +104,13 @@ spamheaders = list(filter(lambda v: "spam" in v.lower(), headers.keys()))
 
 To get a simple barchart on the distribution of email domains in your `.mbox`, you can create a `DomainSummary` object and call the `.plot()` function:
 
+<img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/raw/main/assets/summaryplot.png" />
+
 ```python
 from emailnetwork.summary import DomainSummary
 summary = DomainSummary(reader)
 summary.plot()
 ```
-
-![](assets/summaryplot.png)
 
 You can also return a `Counter()` (a subclass of `dict`) instead of a plot:
 
