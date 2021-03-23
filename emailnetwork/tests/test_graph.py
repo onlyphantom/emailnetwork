@@ -1,6 +1,5 @@
 import os
-from unittest import TestCase
-from unittest import mock
+from unittest import TestCase, mock
 
 from emailnetwork.extract import MBoxReader
 # from emailnetwork.graph import plot_single_email

@@ -36,6 +36,7 @@ A sample `.mbox` file is provided to you, but you can obtain export your own mai
 
 
 ```python
+from emailnetwork.extract import MBoxReader
 reader = MBoxReader('path-to-mbox.mbox')
 print(f'{len(reader)} emails in the sample mbox.')
 
@@ -56,6 +57,7 @@ emails = reader.extract()
 
 For graph visualization:
 ```py
+from emailnetwork.extract import MBoxReader
 # Read from .mbox
 MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
 reader = MBoxReader(MBOX_PATH)
@@ -89,6 +91,34 @@ headers.histogram()
 ```
 Because `HeaderCounter` is a subclass of Python's `Counter`, you can also perform operations such as `headers.most_common(8)` to get the 8 most-common headers from the `mbox` file.
 
+If you want to find all email headers with the word "spam" in it (e.g spam score, other antispam mechanism), you can use Python's `filter()` function:
+```python
+reader = MBoxReader('path-to-mbox')
+headers = HeaderCounter(reader)
+spamheaders = list(filter(lambda v: "spam" in v.lower(), headers.keys()))
+# return:
+# ['X-Spam-Checked-In-Group', 'X-Microsoft-Antispam-PRVS', 'X-Microsoft-Antispam-Untrusted', 'X-Microsoft-Antispam-Message-Info-Original', 'X-Forefront-Antispam-Report-Untrusted', 'x-ms-exchange-antispam-messagedata', 'X-Microsoft-Antispam', 'X-Microsoft-Antispam-Message-Info', 'X-Forefront-Antispam-Report', 'X-Mimecast-Spam-Score', 'x-microsoft-antispam-prvs', 'x-microsoft-antispam', 'x-microsoft-antispam-message-info', 'x-forefront-antispam-report']
+```
+
+#### Mailbox Summary
+
+To get a simple barchart on the distribution of email domains in your `.mbox`, you can create a `DomainSummary` object and call the `.plot()` function:
+
+```python
+from emailnetwork.summary import DomainSummary
+summary = DomainSummary(reader)
+summary.plot()
+```
+
+![](assets/summaryplot.png)
+
+You can also return a `Counter()` (a subclass of `dict`) instead of a plot:
+
+```python
+summary.summary
+# return:
+# Counter({'supertype.ai': 203, 'hubspot.com': 115, 'gmail.com': 75, 'google.com': 53, 'adcolony.com': 38, 'fbworkmail.com': 35, 'elementor.com': 29, 'payoneer.com': 15, 'gogame.net': 14, 'zoomd.com': 13, 'am.atlassian.com': 10, 'theafternaut.com': 6, 'alegrium.com': 5, 'accounts.google.com': 4, 'e.atlassian.com': 4, 'tnbaura.com': 4, 'support.lazada.sg': 4, '3kraters.com': 3, 'go.facebookmail.com': 2, 'docs.google.com': 2, 'mail.hellosign.com': 2, 'algorit.ma': 2, 'supertype.atlassian.net': 2, 'ucdconnect.ie': 2, 'mc.facebookmail.com': 1, 'inplacesoftware.com': 1, 'aura.co': 1, 'atlassian.com': 1, 'greenhouse.io': 1})
+```
 ##### Why Python 3.7+?
 Python 3.7+ is required because the package is written to take advantage of many features of Python 3.7 and above. 
 
@@ -125,7 +155,9 @@ All tests are located in the `/tests/` directory.
 
 ## Authors and Copyright
 
-Samuel Chan, Supertype [https://supertype.ai](https://supertype.ai)
+Samuel Chan, Supertype [Supertype](https://supertype.ai)
+
+Vincentius Christopher Calvin, Supertype [https://supertype.ai](https://supertype.ai)
 
 If you find the code useful in your project, please link to this repository in your citation.
 

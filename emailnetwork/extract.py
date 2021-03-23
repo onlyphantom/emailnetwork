@@ -137,8 +137,14 @@ class MBoxReader(object):
 
 
 if __name__ == '__main__':
-    # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
-    reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
+    reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
+    # reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
+    headers = HeaderCounter(reader)
+    k = headers.keys()
+    spamheaders = list(filter(lambda v: "spam" in v.lower(), k))
+    
+    summary = DomainSummary(reader)
+    
     email = reader.mbox[1]
     emailmsg = extract_meta(email)
     emailbody = extract_body(email)

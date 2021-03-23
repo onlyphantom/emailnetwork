@@ -38,7 +38,7 @@ def clean_subject(subject):
         except:
             return subject.decode('utf-8').strip()
     else:
-        return subject.strip()
+        return subject.strip().replace('\r\n', '')
 
 
 def clean_body(email):
