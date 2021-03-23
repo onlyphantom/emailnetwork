@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: emailnetwork
-Version: 0.0.1
+Version: 0.0.2
 Summary: Network graphing utilities for email/mailbox (.mbox) data
 Home-page: http://github.com/onlyphantom/emailnetwork
 Author: Samuel Chan
@@ -13,8 +13,8 @@ Description: # Email Network
         
         <img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph1.png?raw=true" style="margin-right:10%">
         <img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph4.png?raw=true" style="margin-right:10%">
+        <img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/raw/main/assets/graph5.png?raw=true" style="margin-right:10%">
         <img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph3.png?raw=true" style="margin-right:10%">
-        <img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/blob/main/assets/graph2.png?raw=true" style="margin-right:10%">
         
         
         For the social scientists, creating social networks from your mailbox data and among other things:
@@ -35,7 +35,16 @@ Description: # Email Network
         * Only dependencies are NetworkX and Matplotlib
         
         ## Example Usage
+        To install `emailnetwork`:
+        ```
+        pip install emailnetwork
+        ```
+        
+        A sample `.mbox` file is provided to you, but you can obtain export your own mailbox from your email service provider. If you use Google (Gmail), you can [use the Google Takeout service](https://takeout.google.com/settings/takeout) to export your mail data.
+        
+        
         ```python
+        from emailnetwork.extract import MBoxReader
         reader = MBoxReader('path-to-mbox.mbox')
         print(f'{len(reader)} emails in the sample mbox.')
         
@@ -56,6 +65,7 @@ Description: # Email Network
         
         For graph visualization:
         ```py
+        from emailnetwork.extract import MBoxReader
         # Read from .mbox
         MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
         reader = MBoxReader(MBOX_PATH)
@@ -75,7 +85,48 @@ Description: # Email Network
         plot_undirected(reader, 'spring', graphml=True)
         ```
         
+        #### Email Header Analysis 
+        <img align="left" width="40%" src="https://github.com/onlyphantom/emailnetwork/raw/main/assets/histo.png?raw=true" style="margin-right:10%">
+        To obtain a histogram:
         
+        ```py
+        from emailnetwork.extract import MBoxReader
+        reader = MBoxReader('path-to-mbox')
+        headers = HeaderCounter(reader)
+        headers.histogram()
+        # to show only top 10 header, set an optional n parameter
+        # headers.histogram(n=10)
+        ```
+        Because `HeaderCounter` is a subclass of Python's `Counter`, you can also perform operations such as `headers.most_common(8)` to get the 8 most-common headers from the `mbox` file.
+        
+        If you want to find all email headers with the word "spam" in it (e.g spam score, other antispam mechanism), you can use Python's `filter()` function:
+        ```python
+        reader = MBoxReader('path-to-mbox')
+        headers = HeaderCounter(reader)
+        spamheaders = list(filter(lambda v: "spam" in v.lower(), headers.keys()))
+        # return:
+        # ['X-Spam-Checked-In-Group', 'X-Microsoft-Antispam-PRVS', 'X-Microsoft-Antispam-Untrusted', 'X-Microsoft-Antispam-Message-Info-Original', 'X-Forefront-Antispam-Report-Untrusted', 'x-ms-exchange-antispam-messagedata', 'X-Microsoft-Antispam', 'X-Microsoft-Antispam-Message-Info', 'X-Forefront-Antispam-Report', 'X-Mimecast-Spam-Score', 'x-microsoft-antispam-prvs', 'x-microsoft-antispam', 'x-microsoft-antispam-message-info', 'x-forefront-antispam-report']
+        ```
+        
+        #### Mailbox Summary
+        
+        To get a simple barchart on the distribution of email domains in your `.mbox`, you can create a `DomainSummary` object and call the `.plot()` function:
+        
+        <img align="left" width="50%" src="https://github.com/onlyphantom/emailnetwork/raw/main/assets/summaryplot.png" />
+        
+        ```python
+        from emailnetwork.summary import DomainSummary
+        summary = DomainSummary(reader)
+        summary.plot()
+        ```
+        
+        You can also return a `Counter()` (a subclass of `dict`) instead of a plot:
+        
+        ```python
+        summary.summary
+        # return:
+        # Counter({'supertype.ai': 203, 'hubspot.com': 115, 'gmail.com': 75, 'google.com': 53, 'adcolony.com': 38, 'fbworkmail.com': 35, 'elementor.com': 29, 'payoneer.com': 15, 'gogame.net': 14, 'zoomd.com': 13, 'am.atlassian.com': 10, 'theafternaut.com': 6, 'alegrium.com': 5, 'accounts.google.com': 4, 'e.atlassian.com': 4, 'tnbaura.com': 4, 'support.lazada.sg': 4, '3kraters.com': 3, 'go.facebookmail.com': 2, 'docs.google.com': 2, 'mail.hellosign.com': 2, 'algorit.ma': 2, 'supertype.atlassian.net': 2, 'ucdconnect.ie': 2, 'mc.facebookmail.com': 1, 'inplacesoftware.com': 1, 'aura.co': 1, 'atlassian.com': 1, 'greenhouse.io': 1})
+        ```
         ##### Why Python 3.7+?
         Python 3.7+ is required because the package is written to take advantage of many features of Python 3.7 and above. 
         
@@ -85,14 +136,36 @@ Description: # Email Network
         * [Typing (Type hints), new in Python 3.5](https://docs.python.org/3/library/typing.html)
         * [Formatted string literal, new in Python 3.6](https://docs.python.org/3/reference/lexical_analysis.html#f-strings)
         ## Testing
-        Git clone, and run `nosetests`. 
+        Git clone, and run `nosetests`. You can also run nosetests with coverage:
+        ```
+        nosetests --with-coverage --cover-package=emailnetwork
+        
+        .........
+        Name                       Stmts   Miss  Cover
+        ----------------------------------------------
+        emailnetwork/__init__.py       2      0   100%
+        emailnetwork/emails.py        55     11    80%
+        emailnetwork/extract.py       54     11    80%
+        emailnetwork/graph.py        120     82    32%
+        emailnetwork/network.py       13      7    46%
+        emailnetwork/utils.py         32     17    47%
+        emailnetwork/version.py        1      0   100%
+        ----------------------------------------------
+        TOTAL                        277    128    54%
+        ----------------------------------------------------------------------
+        Ran 9 tests in 3.226s
+        
+        OK
+        ```
         
         All tests are located in the `/tests/` directory.
         
         
         ## Authors and Copyright
         
-        Samuel Chan, Supertype [https://supertype.ai](https://supertype.ai)
+        Samuel Chan, Supertype [Supertype](https://supertype.ai)
+        
+        Vincentius Christopher Calvin, Supertype [https://supertype.ai](https://supertype.ai)
         
         If you find the code useful in your project, please link to this repository in your citation.
         

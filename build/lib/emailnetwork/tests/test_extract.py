@@ -2,9 +2,13 @@ import os
 import datetime
 from unittest import TestCase
 
-from emailnetwork.extract import MBoxReader, extract_meta
-from emailnetwork.emails import EmailAddress, EmailMeta
+from emailnetwork.extract import MBoxReader, extract_meta, extract_body
+from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
 
+"""
+Demo mbox is generated from Benjamin Bengfort's Tribe tool
+with person names modified for anonymity 
+"""
 MBOX_PATH = f'{os.path.dirname(__file__)}/test.mbox'
 
 class TestExtract(TestCase):
@@ -38,27 +42,49 @@ class TestExtract(TestCase):
         self.assertIsInstance(firstemail.sender.name, str)
         self.assertIsInstance(firstemail.sender.email, str)        
 
-    def test_filter_by_date(self):
-        newmails = self.reader.filter_by_date(">=", "2020-01-01")
+    def test_filter_emails(self):
+        newmails = self.reader.filter_emails(datestring="2020-01-01", dateoperator=">=")
         self.assertEqual(len(newmails), 4)
 
         for email in newmails:
             self.assertGreater(email.date, datetime.datetime(2020,1,1))
             self.assertLess(email.date, datetime.datetime.now())
 
-        oldmails = self.reader.filter_by_date("<=", "2019-12-31")
+        oldmails = self.reader.filter_emails(datestring="2019-12-31", dateoperator="<=")
         self.assertEqual(len(oldmails), 136)
 
-        exactmails = self.reader.filter_by_date("==", "2020-04-17")
+        exactmails = self.reader.filter_emails(datestring="2020-04-17", dateoperator="==")
         self.assertEqual(len(exactmails), 1)
         self.assertEqual(exactmails[0].date.date(), datetime.date(2020, 4, 17))
 
-    # also need tests to fail with expected exception when not in [==, <=, >=]
+        namedmails = self.reader.filter_emails(emailaddress='samuelchan@gmail.com')
+
+        for email in namedmails:
+            checkers = [email.sender.email] + [recipient.email for recipient in email.recipients]
+            self.assertTrue('samuelchan@gmail.com' in checkers)
+
+        fullfilteredmails = self.reader.filter_emails(emailaddress='samuelchan@gmail.com', datestring="2020-01-01", dateoperator=">=")
+
+        for email in fullfilteredmails:
+            checkers = [email.sender.email] + [recipient.email for recipient in email.recipients]
+            self.assertTrue('samuelchan@gmail.com' in checkers)
+            self.assertGreater(email.date, datetime.datetime(2020,1,1))
+
+    # also need tests to fail with expected exception when datetime operator not in [==, <=, >=], emailaddress and datetime in wrong format.
     def test_afunction_throws_exception(self):
-        self.assertRaises(ValueError, self.reader.filter_by_date, "<", "2019-12-31")
+        self.assertRaises(ValueError, self.reader.filter_emails, 20, "2019-12-31", "<")
 
     def test_extract_meta_single(self):
         for email in self.reader.mbox:
+            self.assertIsInstance(email['Subject'], (bytes, str))
             emailmsg = extract_meta(email)
             self.assertIsInstance(emailmsg, EmailMeta)
             self.assertIsInstance(emailmsg.origin_domain, str)
+            self.assertIsInstance(emailmsg.subject, str)
+
+    def test_extract_body_single(self):
+        for email in self.reader.mbox:
+            emailbody = extract_body(email)
+            self.assertIsInstance(emailbody, EmailBody)
+            self.assertIsInstance(emailbody.subject, str)
+            self.assertIsInstance(emailbody.body, str)

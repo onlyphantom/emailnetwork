@@ -14,13 +14,14 @@ For the social scientists, creating social networks from your mailbox data and a
 * Study social actors (most emails from Marketing involve Peter and Andy) and their relative influence  
 * Identify the key social groups (Sales team hangs out a lot, but the IT / product division less so)
 * Key account managers of the company (Despite being with the company only recently, Margaretha is connected to more key clients than her peers)
+* Compare distributions and patterns of email behaviors and aggregated statistics between groups of employees  
 
 
 If you're a graph theorist and looking for something more statistical:
-* Support directed and undirected graphs (**implemented in version 0.0.2**, see below)
+* Support directed and undirected graphs (**already implemented in version 0.0.2**, see below)
 * Also output statistical measurements such as centrality distribution (**planned for version 0.0.3**)
 * Betweenness, closeness, hubness, distance histograms plotting (**planned for version 0.0.3**) 
-* Exports to `.graphml` format for use in other graphing software (**implemented in version 0.0.2**)
+* Exports to `.graphml` format for use in other graphing software (**already implemented in version 0.0.2**, see below)
 
 ## Dependencies
 * Python 3.7+
@@ -155,9 +156,11 @@ All tests are located in the `/tests/` directory.
 
 ## Authors and Copyright
 
-Samuel Chan, Supertype [Supertype](https://supertype.ai)
+Samuel Chan, [Supertype](https://supertype.ai)
+ - Github: [onlyphantom](https://github.com/onlyphantom)
 
-Vincentius Christopher Calvin, Supertype [https://supertype.ai](https://supertype.ai)
+Vincentius Christopher Calvin, [Supertype](https://supertype.ai)
+ - Github: [vccalvin33](https://github.com/vccalvin33)
 
 If you find the code useful in your project, please link to this repository in your citation.
 

@@ -5,7 +5,9 @@ emailnetwork/__init__.py
 emailnetwork/emails.py
 emailnetwork/extract.py
 emailnetwork/graph.py
+emailnetwork/header.py
 emailnetwork/network.py
+emailnetwork/summary.py
 emailnetwork/utils.py
 emailnetwork/version.py
 emailnetwork.egg-info/PKG-INFO
@@ -18,4 +20,5 @@ emailnetwork/tests/__init__.py
 emailnetwork/tests/test.mbox
 emailnetwork/tests/test_extract.py
 emailnetwork/tests/test_graph.py
+emailnetwork/tests/test_summary.py
 emailnetwork/tests/test_utils.py

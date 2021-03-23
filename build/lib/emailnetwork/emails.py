@@ -1,7 +1,6 @@
-
 from dataclasses import dataclass
 from datetime import datetime
-from .utils import parse_date
+from emailnetwork.utils import parse_date
 
 @dataclass
 class EmailMeta:
@@ -22,30 +21,15 @@ class EmailMeta:
         self.origin_domain = self.sender.domain
         self.date = parse_date(self.date)
 
-    def __eq__(self, datestring):
-        try:
-            targetdate = datetime.fromisoformat(datestring)
-        except ValueError:
-            print(ValueError)
-            return "Please use the ISO format for comparison: YYYY-MM-DD"
+    def __eq__(self, targetdate):
         if isinstance(targetdate, datetime):
             return self.date.date() == targetdate.date()
 
-    def __ge__(self, datestring):
-        try:
-            targetdate = datetime.fromisoformat(datestring)
-        except ValueError:
-            print(ValueError)
-            return "Please use the ISO format for comparison: YYYY-MM-DD"
+    def __ge__(self, targetdate):
         if isinstance(targetdate, datetime):
             return self.date.date() >= targetdate.date()
 
-    def __le__(self, datestring):
-        try:
-            targetdate = datetime.fromisoformat(datestring)
-        except ValueError:
-            print(ValueError)
-            return "Please use the ISO format for comparison: YYYY-MM-DD"
+    def __le__(self, targetdate):
         if isinstance(targetdate, datetime):
             return self.date.date() <= targetdate.date()
 
@@ -65,3 +49,7 @@ class EmailAddress:
     def domain(self):
         return self.email.split('@')[-1] or None
 
+@dataclass
+class EmailBody:
+    subject: str = None
+    body: str = None
