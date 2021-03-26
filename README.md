@@ -59,6 +59,8 @@ emails = reader.extract()
 For graph visualization:
 ```py
 from emailnetwork.extract import MBoxReader
+from emailnetwork.graph import plot_directed, plot_undirected, plot_single_directed, plot_single_undirected
+
 # Read from .mbox
 MBOX_PATH = f'{os.path.dirname(__file__)}/tests/test.mbox'
 reader = MBoxReader(MBOX_PATH)
