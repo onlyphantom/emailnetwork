@@ -20,7 +20,7 @@ class TestExtract(TestCase):
         self.reader = None
 
     def test_read_mbox(self):
-        self.assertTrue(isinstance(self.reader, MBoxReader))
+        self.assertIsInstance(self.reader, MBoxReader)
 
     def test_length_mbox(self):
         self.assertEqual(len(self.reader), 140)
