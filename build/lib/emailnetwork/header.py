@@ -43,8 +43,8 @@ class HeaderCounter(Counter):
 
 if __name__ == '__main__':
     from emailnetwork.extract import MBoxReader
-    # reader = MBoxReader('/Users/samuel/Footprints/samuel-supertype.mbox')
-    reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
+    reader = MBoxReader('/Users/samuel/EmailNetwork/samuel-supertype.mbox')
+    # reader = MBoxReader('/Users/vincentiuscalvin/Documents/Supertype/mbox-dataset/Ori_Sample_01.mbox')
     headers = HeaderCounter(reader)
 
     k = headers.keys()
