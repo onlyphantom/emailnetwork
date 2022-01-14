@@ -42,11 +42,12 @@ reader = MBoxReader('path-to-mbox.mbox')
 print(f'{len(reader)} emails in the sample mbox.')
 
 # extract a specific email
+from emailnetwork.extract import extract_meta
 email = reader.mbox[5]
 emailmsg = extract_meta(email)
 
 # filter emails by certain date
-thisyearmails = reader.filter_by_date('>=', '2021-01-05')
+thisyearmails = reader.filter_emails(dateoperator='>=', datestring='2021-01-05')
 
 # print email domains of recipients
 print(emailmsg.recipients)
