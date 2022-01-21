@@ -132,26 +132,27 @@ Examples of features that were used extensively in the creation of this package:
 * [Typing (Type hints), new in Python 3.5](https://docs.python.org/3/library/typing.html)
 * [Formatted string literal, new in Python 3.6](https://docs.python.org/3/reference/lexical_analysis.html#f-strings)
 ## Testing
-Git clone, and run `nosetests`. You can also run nosetests with coverage:
+Git clone, and run `pytest`. You can also run pytest with coverage:
 ```
-nosetests --with-coverage --cover-package=emailnetwork
+pytest --cov
 
 .........
 Name                       Stmts   Miss  Cover
 ----------------------------------------------
-emailnetwork/__init__.py       2      0   100%
-emailnetwork/emails.py        55     11    80%
-emailnetwork/extract.py       54     11    80%
-emailnetwork/graph.py        120     82    32%
-emailnetwork/network.py       13      7    46%
-emailnetwork/utils.py         32     17    47%
-emailnetwork/version.py        1      0   100%
+emailnetwork\__init__.py       2      0   100%
+emailnetwork\emails.py        39      1    97%
+emailnetwork\extract.py       94     24    74%
+emailnetwork\graph.py        120     82    32%
+emailnetwork\header.py        39     30    23%
+emailnetwork\network.py       13      7    46%
+emailnetwork\summary.py       74     33    55%
+emailnetwork\utils.py         30      9    70%
+emailnetwork\version.py        1      0   100%
 ----------------------------------------------
-TOTAL                        277    128    54%
-----------------------------------------------------------------------
-Ran 9 tests in 3.226s
+TOTAL                        412    186    55%
 
-OK
+
+==================================================== 12 passed in 2.76s ====================================================
 ```
 
 All tests are located in the `/tests/` directory.
