@@ -15,6 +15,7 @@ class TestExtract(TestCase):
     def setUp(self):
         self.reader = MBoxReader(MBOX_PATH)
         self.emails = self.reader.extract()
+        self.emailAdress = self.reader.mbox[1]
 
     def tearDown(self):
         self.reader = None
@@ -41,6 +42,11 @@ class TestExtract(TestCase):
         self.assertIsInstance(firstemail.sender, EmailAddress)
         self.assertIsInstance(firstemail.sender.name, str)
         self.assertIsInstance(firstemail.sender.email, str)        
+
+        mail = extract_meta(self.emailAdress)
+        self.assertIsInstance(mail.recipients[0].name, str)
+        self.assertIsInstance(mail.recipients[0].email, str)
+
 
     def test_filter_emails(self):
         newmails = self.reader.filter_emails(datestring="2020-01-01", dateoperator=">=")

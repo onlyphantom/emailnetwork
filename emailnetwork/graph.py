@@ -88,6 +88,8 @@ def plot_single_undirected(reader:MBoxReader, id:int=False, showtitle:bool=False
 
     subject = textwrap.fill(emailmsg.subject, 40)
     ng = PeopleCombination(emailmsg)    
+
+    plt.figure()
     G = nx.Graph(
             name='Single Email Social Network')
     counter = Counter()

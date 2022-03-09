@@ -1,10 +1,11 @@
 import os
-from unittest import TestCase
+from unittest import TestCase, mock
 from collections import Counter
 from datetime import datetime
 
 from emailnetwork.extract import MBoxReader
 from emailnetwork.summary import DomainSummary, IncomingOutgoingSummary
+
 
 MBOX_PATH = f'{os.path.dirname(__file__)}/test.mbox'
 
@@ -22,10 +23,13 @@ class TestSummary(TestCase):
     def test_summary_instance(self):
         self.assertTrue(isinstance(self.domain_summary, DomainSummary))
         self.assertTrue(isinstance(self.domain_summary.summary, Counter))
+        self.assertTrue(isinstance(self.domain_summary.__str__(), str))
         self.assertTrue(isinstance(
             self.incoming_outgoing_summary, IncomingOutgoingSummary))
         self.assertTrue(isinstance(
             self.incoming_outgoing_summary.summary, dict))
+        self.assertTrue(isinstance(
+            self.incoming_outgoing_summary.__str__(), str))
 
     def test_one_summary(self):
         for summary in self.domain_summary.summary:
@@ -42,3 +46,11 @@ class TestSummary(TestCase):
                 self.assertIn(keys, ('Incoming', 'Outgoing'))
                 self.assertIsInstance(
                     self.incoming_outgoing_summary.summary[summary][keys], int)
+
+    @mock.patch("%s.emailnetwork.summary.plt" % __name__)
+    def test_plot(self, mock_plt):
+        #with mock.patch("summary.DomainSummary.plt") as patch:
+        DomainSummary(self.reader).plot()
+        
+        mock_plt.title.assert_called_once_with("Sender's Domain Occurences", fontdict={"fontname": "Helvetica", "color": "k", "fontweight": "bold", "fontsize": 12})
+        assert mock_plt.figure.called
