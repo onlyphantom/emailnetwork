@@ -46,11 +46,3 @@ class TestSummary(TestCase):
                 self.assertIn(keys, ('Incoming', 'Outgoing'))
                 self.assertIsInstance(
                     self.incoming_outgoing_summary.summary[summary][keys], int)
-
-    @mock.patch("%s.emailnetwork.summary.plt" % __name__)
-    def test_plot(self, mock_plt):
-        #with mock.patch("summary.DomainSummary.plt") as patch:
-        DomainSummary(self.reader).plot()
-        
-        mock_plt.title.assert_called_once_with("Sender's Domain Occurences", fontdict={"fontname": "Helvetica", "color": "k", "fontweight": "bold", "fontsize": 12})
-        assert mock_plt.figure.called

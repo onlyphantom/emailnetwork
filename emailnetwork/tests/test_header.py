@@ -27,13 +27,4 @@ class TestHeader(TestCase):
         self.assertEqual(len(k), self.n_headers)
         self.assertEqual(len(v), self.n_headers)
 
-    #@mock.patch("%s.header.plt" % __name__)
-    def test_histogram(self):
-        with mock.patch("%s.header.HeaderCounter.plt" % __name__) as patch:
-            head = header.HeaderCounter(self.reader)
-            head.histogram(self.n_headers)
-            patch.title.assert_called_once_with("Email Header Analysis")
-            assert patch.figure.called
-
-
         
