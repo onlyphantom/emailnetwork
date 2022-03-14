@@ -157,6 +157,9 @@ TOTAL                        412    186    55%
 
 All tests are located in the `/tests/` directory.
 
+## Email Network Demo
+
+Click [here](https://colab.research.google.com/drive/1mSKbt9-dTTtQq296QUkMZlZpAMybgmpV?usp=sharing) to access the demo for email network.
 
 ## Authors and Copyright
 
