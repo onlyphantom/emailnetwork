@@ -159,7 +159,7 @@ All tests are located in the `/tests/` directory.
 
 ## Email Network Demo
 
-Click [here](https://colab.research.google.com/drive/1mSKbt9-dTTtQq296QUkMZlZpAMybgmpV?usp=sharing) to access the demo for email network.
+[Aurellia Christie](https://github.com/AurelliaChristie) has created a Colab Notebook: [Email Network Walkthrough](https://colab.research.google.com/drive/1mSKbt9-dTTtQq296QUkMZlZpAMybgmpV?usp=sharing) to walk you through the most common functionalities of Email Network
 
 ## Authors and Copyright
 
