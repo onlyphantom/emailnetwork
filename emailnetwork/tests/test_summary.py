@@ -1,10 +1,11 @@
 import os
-from unittest import TestCase
+from unittest import TestCase, mock
 from collections import Counter
 from datetime import datetime
 
 from emailnetwork.extract import MBoxReader
 from emailnetwork.summary import DomainSummary, IncomingOutgoingSummary
+from emailnetwork.header import HeaderCounter
 
 MBOX_PATH = f'{os.path.dirname(__file__)}/test.mbox'
 
@@ -14,6 +15,7 @@ class TestSummary(TestCase):
         self.reader = MBoxReader(MBOX_PATH)
         self.domain_summary = DomainSummary(self.reader)
         self.incoming_outgoing_summary = IncomingOutgoingSummary(self.reader)
+        self.headers = HeaderCounter(self.reader)
 
     def tearDown(self):
         self.domain_summary = None
@@ -42,3 +44,8 @@ class TestSummary(TestCase):
                 self.assertIn(keys, ('Incoming', 'Outgoing'))
                 self.assertIsInstance(
                     self.incoming_outgoing_summary.summary[summary][keys], int)
+    
+    def test_header_instance(self):
+        self.assertTrue(isinstance(self.headers, HeaderCounter))
+
+
