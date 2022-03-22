@@ -1,9 +1,6 @@
 import os
-from telnetlib import DO
 from unittest import TestCase, mock
-from unittest.mock import MagicMock
 from collections import Counter
-from datetime import datetime
 
 from emailnetwork.extract import MBoxReader
 from emailnetwork.summary import DomainSummary, IncomingOutgoingSummary
@@ -47,6 +44,8 @@ class TestSummary(TestCase):
                 self.assertIsInstance(
                     self.incoming_outgoing_summary.summary[summary][keys], int)
 
+    def test_header(self):
+        self.assertIsInstance(self.headers, HeaderCounter)
 
     
 
