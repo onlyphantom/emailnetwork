@@ -1,5 +1,7 @@
 import os
+from telnetlib import DO
 from unittest import TestCase, mock
+from unittest.mock import MagicMock
 from collections import Counter
 from datetime import datetime
 
@@ -44,8 +46,8 @@ class TestSummary(TestCase):
                 self.assertIn(keys, ('Incoming', 'Outgoing'))
                 self.assertIsInstance(
                     self.incoming_outgoing_summary.summary[summary][keys], int)
+
+
     
-    def test_header_instance(self):
-        self.assertTrue(isinstance(self.headers, HeaderCounter))
 
 
