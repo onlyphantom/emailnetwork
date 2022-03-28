@@ -49,9 +49,7 @@ class TestSummary(TestCase):
 
     @mock.patch(f"{__name__}.summary.plt")
     def test_mock_plot(self, mock_plt):
-        reader = MBoxReader(
-            "/Users/karinawidyastuti/Documents/Supertype/UnitTesting/emailnetwork/emailnetwork/tests/test.mbox"
-        )
+        reader = MBoxReader(MBOX_PATH)
         ds = DomainSummary(reader=reader)
         ds.plot()
         mock_plt.title.assert_called_once_with(
