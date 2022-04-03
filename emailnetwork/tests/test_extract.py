@@ -9,7 +9,8 @@ from emailnetwork.emails import EmailAddress, EmailMeta, EmailBody
 Demo mbox is generated from Benjamin Bengfort's Tribe tool
 with person names modified for anonymity 
 """
-MBOX_PATH = f'{os.path.dirname(__file__)}/test.mbox'
+MBOX_PATH = f"{os.path.dirname(__file__)}/test.mbox"
+
 
 class TestExtract(TestCase):
     def setUp(self):
@@ -32,7 +33,7 @@ class TestExtract(TestCase):
         self.assertIsInstance(firstemail, EmailMeta)
         self.assertIsInstance(firstemail.subject, str)
         self.assertIsInstance(firstemail.date, datetime.datetime)
-        
+
         for msg in self.emails:
             self.assertGreaterEqual(len(msg.recipients), 1)
             self.assertIsInstance(msg.cc, list)
@@ -41,39 +42,81 @@ class TestExtract(TestCase):
         firstemail = next(self.emails)
         self.assertIsInstance(firstemail.sender, EmailAddress)
         self.assertIsInstance(firstemail.sender.name, str)
-        self.assertIsInstance(firstemail.sender.email, str)   
+        self.assertIsInstance(firstemail.sender.email, str)
 
         mail = extract_meta(self.emailAdress)
         self.assertIsInstance(mail.recipients[0].name, str)
-        self.assertIsInstance(mail.recipients[0].email, str)     
+        self.assertIsInstance(mail.recipients[0].email, str)
 
     def test_filter_emails(self):
         newmails = self.reader.filter_emails(datestring="2020-01-01", dateoperator=">=")
         self.assertEqual(len(newmails), 4)
 
         for email in newmails:
-            self.assertGreater(email.date, datetime.datetime(2020,1,1))
+            self.assertGreater(email.date, datetime.datetime(2020, 1, 1))
             self.assertLess(email.date, datetime.datetime.now())
 
         oldmails = self.reader.filter_emails(datestring="2019-12-31", dateoperator="<=")
         self.assertEqual(len(oldmails), 136)
 
-        exactmails = self.reader.filter_emails(datestring="2020-04-17", dateoperator="==")
+        exactmails = self.reader.filter_emails(
+            datestring="2020-04-17", dateoperator="=="
+        )
         self.assertEqual(len(exactmails), 1)
         self.assertEqual(exactmails[0].date.date(), datetime.date(2020, 4, 17))
 
-        namedmails = self.reader.filter_emails(emailaddress='samuelchan@gmail.com')
+        namedmails = self.reader.filter_emails(emailaddress="samuelchan@gmail.com")
 
         for email in namedmails:
-            checkers = [email.sender.email] + [recipient.email for recipient in email.recipients]
-            self.assertTrue('samuelchan@gmail.com' in checkers)
+            checkers = [email.sender.email] + [
+                recipient.email for recipient in email.recipients
+            ]
+            self.assertTrue("samuelchan@gmail.com" in checkers)
 
-        fullfilteredmails = self.reader.filter_emails(emailaddress='samuelchan@gmail.com', datestring="2020-01-01", dateoperator=">=")
+        fullfilteredmails = self.reader.filter_emails(
+            emailaddress="samuelchan@gmail.com",
+            datestring="2020-01-01",
+            dateoperator=">=",
+        )
 
         for email in fullfilteredmails:
-            checkers = [email.sender.email] + [recipient.email for recipient in email.recipients]
-            self.assertTrue('samuelchan@gmail.com' in checkers)
-            self.assertGreater(email.date, datetime.datetime(2020,1,1))
+            checkers = [email.sender.email] + [
+                recipient.email for recipient in email.recipients
+            ]
+            self.assertTrue("samuelchan@gmail.com" in checkers)
+            self.assertGreater(email.date, datetime.datetime(2020, 1, 1))
+
+        fullfilteredmailsequal = self.reader.filter_emails(
+            emailaddress="samuelchan@gmail.com",
+            datestring="2020-04-17",
+            dateoperator="==",
+        )
+
+        for email in fullfilteredmailsequal:
+            checkers = [email.sender.email] + [
+                recipient.email for recipient in email.recipients
+            ]
+            self.assertTrue("samuelchan@gmail.com" in checkers)
+            self.assertEqual(
+                fullfilteredmailsequal[0].date.date(), datetime.date(2020, 4, 17)
+            )
+
+        fullfilteremailless = self.reader.filter_emails(
+            emailaddress="samuelchan@gmail.com",
+            datestring="2019-12-31",
+            dateoperator="<=",
+        )
+
+        for email in fullfilteremailless:
+            checkers = [email.sender.email] + [
+                recipient.email for recipient in email.recipients
+            ]
+            self.assertTrue("samuelchan@gmail.com" in checkers)
+
+        mailswithoutfilter = self.reader.filter_emails()
+
+        for email in mailswithoutfilter:
+            self.assertIsInstance(email, EmailMeta)
 
     # also need tests to fail with expected exception when datetime operator not in [==, <=, >=], emailaddress and datetime in wrong format.
     def test_afunction_throws_exception(self):
@@ -81,7 +124,7 @@ class TestExtract(TestCase):
 
     def test_extract_meta_single(self):
         for email in self.reader.mbox:
-            self.assertIsInstance(email['Subject'], (bytes, str))
+            self.assertIsInstance(email["Subject"], (bytes, str))
             emailmsg = extract_meta(email)
             self.assertIsInstance(emailmsg, EmailMeta)
             self.assertIsInstance(emailmsg.origin_domain, str)
