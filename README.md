@@ -1,3 +1,9 @@
+
+[![Supertype](https://img.shields.io/badge/supertype.ai-incubate-b1976b)](https://supertype.ai/incubate)
+[![PyPI Version](https://img.shields.io/pypi/v/emailnetwork)](https://pypi.org/project/emailnetwork/)
+[![Colab Notebook](https://img.shields.io/badge/notebook-colab%20notebook-orange)](https://colab.research.google.com/drive/1mSKbt9-dTTtQq296QUkMZlZpAMybgmpV?usp=sharing)
+[![Downloads](https://pepy.tech/badge/emailnetwork)](https://pepy.tech/project/emailnetwork)
+
 # Email Network
 
 ## Description
